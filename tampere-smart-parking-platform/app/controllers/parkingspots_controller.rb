@@ -1,4 +1,4 @@
-class ParkingspotController < ApplicationController
+class ParkingspotsController < ApplicationController
   def index
     @parkingspot = Parkingspot.order(:created_at).last
     render json: {latitude: @parkingspot.latitude, longitude: @parkingspot.longitude}
