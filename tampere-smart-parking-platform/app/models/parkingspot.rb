@@ -1,2 +1,0 @@
-class Parkingspot < ApplicationRecord
-end

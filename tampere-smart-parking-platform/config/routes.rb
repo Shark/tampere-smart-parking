@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  resources :parkingspots, only: [:create, :index]
+  resources :parking_spots, only: [:create, :index]
 end

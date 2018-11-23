@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
   var request = new XMLHttpRequest();
-  var path = 'parkingspots'
+  var path = 'parking_spots'
 
   request.open('GET', path, true);
 
