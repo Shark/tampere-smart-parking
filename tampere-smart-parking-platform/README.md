@@ -1,6 +1,36 @@
-# README
+# Tampere Smart Parking Platform
 
-Deploy:
+## API
+
+### GET /parking_spots
+
+Response:
+
+```json
+{
+  "latitude": 1.234,
+  "longitude": 5.678
+}
+```
+
+### POST /parking_spots
+
+Request:
+
+```
+{
+  "parking_spot": {
+    "latitude": 1.234,
+    "longitude": 5.678
+  }
+}
+```
+
+Response:
+
+200 OK
+
+## Deploy
 
 ```
 git remote add deploy ...
