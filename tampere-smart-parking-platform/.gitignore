@@ -1,3 +1,6 @@
 /tmp
 /log
 /db/development.sqlite3
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
