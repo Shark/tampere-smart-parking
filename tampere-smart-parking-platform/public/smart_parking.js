@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
   var request = new XMLHttpRequest();
-  var url = 'http://localhost:3000/parkingspot'
+  var path = 'parkingspots'
 
-  request.open('GET', url, true);
+  request.open('GET', path, true);
 
   request.onload = function () {
     var data = JSON.parse(this.response)
