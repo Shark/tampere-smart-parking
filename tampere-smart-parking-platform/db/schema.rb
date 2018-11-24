@@ -16,10 +16,12 @@ ActiveRecord::Schema.define(version: 2018_11_24_104629) do
   enable_extension "plpgsql"
 
   create_table "parking_spots", force: :cascade do |t|
+    t.decimal "latitude", precision: 9, scale: 6
+    t.decimal "longitude", precision: 9, scale: 6
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "status"
     t.text "address"
+    t.string "status"
     t.json "polygon"
   end
 
