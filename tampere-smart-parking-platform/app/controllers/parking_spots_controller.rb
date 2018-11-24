@@ -20,7 +20,10 @@ class ParkingSpotsController < ApplicationController
     end
 
     if parking_spot.valid?
-      parking_spot.save!
+      ParkingSpot.transaction do
+        Cache.where(key: 'map_data').delete_all
+        parking_spot.save!
+      end
       head :ok
     else
       head :unprocessable_entity
