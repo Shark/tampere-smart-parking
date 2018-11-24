@@ -48,8 +48,8 @@ def detect_cars():
   detector.setModelTypeAsRetinaNet()
   detector.setModelPath( os.path.join(execution_path , "models/resnet50_coco_best_v2.0.1.h5"))
   detector.loadModel()
-  custom = detector.CustomObjects(car=True, motorcycle=True, bus=True, truck=True)
-  return detector.detectCustomObjectsFromImage(custom_objects=custom, input_image=os.path.join(execution_path , 'test.jpg'), output_image_path=os.path.join(execution_path , 'test-detected.jpg'), minimum_percentage_probability=40)
+  custom = detector.CustomObjects(car=True)
+  return detector.detectCustomObjectsFromImage(custom_objects=custom, input_image=os.path.join(execution_path , 'test.jpg'), output_image_path=os.path.join(execution_path , 'test-detected.jpg'), minimum_percentage_probability=15)
 
 def set_occupation(cars, parking_spots):
   for car in cars:
@@ -63,7 +63,6 @@ def update_status_backend(parking_spots):
     payload.append(spot.to_payload())
 
   payload = '&'.join(payload)
-  print('Payload: ' + payload)
   result = requests.post(f'https://tampere.sh4rk.pw/parking_spots/bulk_update?{payload}')
   print('Send Bulk Update!')
 
@@ -71,10 +70,12 @@ def take_photo():
   ret, frame = camera.read()
   cv2.imwrite("test.jpg", frame)
   print('took photo')
+  print('--')
 
 def print_occupation(parking_spots):
   for spot in parking_spots:
     print(f'Box: {spot.friendly_name}:{spot.occupied}')
+  print('--')
 
 execution_path = os.getcwd()
 camera = cv2.VideoCapture(1)
@@ -87,10 +88,10 @@ try:
     set_occupation(detected_cars, parking_spots)
     print_occupation(parking_spots)
     update_status_backend(parking_spots)
-    print('---')
+    print('===========')
     time.sleep(5)
 except KeyboardInterrupt:
-  print('interrupted!')
+  print('interrupted')
 
 
 # Calibration Mode
