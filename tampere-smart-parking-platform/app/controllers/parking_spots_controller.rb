@@ -20,7 +20,7 @@ class ParkingSpotsController < ApplicationController
                  map(&:id)
 
       ParkingSpot.transaction do
-        Cache.where(key: 'map_data').delete_all
+        Cache.where(key: 'map_data').update_all(invalidated: true)
         ParkingSpot.where(id: spot_ids).update_all(blocked: params[:mode] == 'disable')
       end
     end
@@ -36,7 +36,7 @@ class ParkingSpotsController < ApplicationController
 
       if parking_spot.valid?
         ParkingSpot.transaction do
-          Cache.where(key: 'map_data').delete_all
+          Cache.where(key: 'map_data').update_all(invalidated: true)
           parking_spot.save!
         end
       end
@@ -53,7 +53,7 @@ class ParkingSpotsController < ApplicationController
 
     if parking_spot.valid?
       ParkingSpot.transaction do
-        Cache.where(key: 'map_data').delete_all
+        Cache.where(key: 'map_data').update_all(invalidated: true)
         parking_spot.save!
       end
       head :ok

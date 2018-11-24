@@ -4,7 +4,7 @@ module Admin
     end
 
     def map_data
-      if cache = Cache.find_by(key: 'map_data')
+      if cache = Cache.find_by(key: 'map_data', invalidated: false)
         return render json: { map_data: cache.content }
       end
 
@@ -32,7 +32,10 @@ module Admin
         "features": features,
       }
 
-      Cache.create!(key: 'map_data', content: feature_collection)
+      Cache.transaction do
+        Cache.where(key: 'map_data').delete_all
+        Cache.create!(key: 'map_data', content: feature_collection)
+      end
 
       render json: { map_data: feature_collection }
     end
