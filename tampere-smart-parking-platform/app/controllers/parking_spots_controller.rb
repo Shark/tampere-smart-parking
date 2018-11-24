@@ -25,7 +25,7 @@ class ParkingSpotsController < ApplicationController
   def bulk_update
     bulk_update_params.each do |spot_name, status|
       parking_spot = ParkingSpot.find_by!(friendly_name: spot_name)
-      parking_spot.assign(status: status)
+      parking_spot.assign_attributes(status: status)
       if parking_spot.free? && parking_spot.status_was != 'free'
         parking_spot.last_confirmed_free_at = Time.now
       end
@@ -73,6 +73,6 @@ class ParkingSpotsController < ApplicationController
   end
 
   def bulk_update_params
-    params.permit(parking_spots: {})
+    params.require(:parking_spots)
   end
 end
