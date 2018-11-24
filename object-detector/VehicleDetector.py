@@ -49,18 +49,22 @@ def print_detected_cars(cars):
     print("--------------------------------")
 
 def set_occupation(cars, parking_spots):
+  spots = []
   for spot in parking_spots:
     spot.occupied = False
+    spots.append(False)
 
   for eachObject in cars:
-    for spot in parking_spots:
+    for index, spot in enumerate(parking_spots):
       if (box_contains(spot, eachObject["box_points"])):
         spot.occupied = True
+        spots[index] = True
+  return spots
 
 def update_status_backend(parking_spots, last_boxes):
   for index, spot in enumerate(parking_spots):
-    #if spot.occupied == last_boxes[index].occupied:
-      #break
+    if spot.occupied == last_boxes[index]:
+      break
     status = 'occupied' if spot.occupied else 'free'
     result = requests.post(f'https://tampere.sh4rk.pw/parking_spots?parking_spot%5Bfriendly_name%5D={spot.friendly_name}&parking_spot%5Bstatus%5D={status}')
     print(f'Send Update {spot.friendly_name}({index + 1}) to {status}')
@@ -75,16 +79,16 @@ def print_occupation(parking_spots):
 
 execution_path = os.getcwd()
 camera = cv2.VideoCapture(1)
-last_boxes = boxes.copy()
+last_boxes = [False, False, False, False, False, False, False, False]
 try:
   while True:
     take_photo()
     detected_cars = detect_cars()
     print_detected_cars(detected_cars)
-    set_occupation(detected_cars, boxes)
+    spot_booleans = set_occupation(detected_cars, boxes)
     print_occupation(boxes)
     update_status_backend(boxes, last_boxes)
-    last_boxes = boxes.copy()
+    last_boxes = spot_booleans
 except KeyboardInterrupt:
     print('interrupted!')
 
