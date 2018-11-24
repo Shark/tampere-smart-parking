@@ -12,11 +12,28 @@ class ParkingSpotsController < ApplicationController
   end
 
   def toggle_spots
-    ParkingSpot.find_each do |parking_spot|
+    ParkingSpot.where(blocked: (params[:mode] == 'enable')).find_each do |parking_spot|
       if parking_spot.in_polygon?(JSON.parse(polygon_params))
         ParkingSpot.transaction do
           Cache.where(key: 'map_data').delete_all
-          parking_spot.update(status: (params[:mode] == 'enable' ? 'free' : 'blocked'))
+          parking_spot.update(blocked: (params[:mode] == 'disable'))
+        end
+      end
+    end
+  end
+
+  def bulk_update
+    bulk_update_params.each do |spot_name, status|
+      parking_spot = ParkingSpot.find_by!(friendly_name: spot_name)
+      parking_spot.assign(status: status)
+      if parking_spot.free? && parking_spot.status_was != 'free'
+        parking_spot.last_confirmed_free_at = Time.now
+      end
+
+      if parking_spot.valid?
+        ParkingSpot.transaction do
+          Cache.where(key: 'map_data').delete_all
+          parking_spot.save!
         end
       end
     end
@@ -24,9 +41,9 @@ class ParkingSpotsController < ApplicationController
 
   def create
     parking_spot = ParkingSpot.find_by!(friendly_name: friendly_name)
-    parking_spot.assign_attributes(parking_spot_params) unless parking_spot.status == 'blocked'
+    parking_spot.assign_attributes(parking_spot_params)
 
-    if parking_spot.status == 'free' && parking_spot.status_was != 'free'
+    if parking_spot.free? && parking_spot.status_was != 'free'
       parking_spot.last_confirmed_free_at = Time.now
     end
 
@@ -53,5 +70,9 @@ class ParkingSpotsController < ApplicationController
 
   def parking_spot_params
     params.require(:parking_spot).permit(:status)
+  end
+
+  def bulk_update_params
+    params.permit(parking_spots: {})
   end
 end

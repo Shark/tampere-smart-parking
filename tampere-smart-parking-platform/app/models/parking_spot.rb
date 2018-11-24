@@ -1,6 +1,7 @@
 class ParkingSpot < ApplicationRecord
+  STATUS = %w(free occupied reserved blocked)
   extend Enumerize
-  enumerize :status, in: %w(free occupied reserved blocked)
+  enumerize :status, in: STATUS
 
   # reverse geocoding is stored in the address attribute
   reverse_geocoded_by :latitude, :longitude do |parking_spot, results|
@@ -12,6 +13,21 @@ class ParkingSpot < ApplicationRecord
           parking_spot.address = "#{road}"
         end
       end
+    end
+  end
+
+  def block
+    return if blocked?
+    update blocked: true
+  end
+
+  def unblock
+    update blocked: false
+  end
+
+  STATUS.each do |status|
+    define_method(:"#{status}?") do
+      self.status == status
     end
   end
 
@@ -33,7 +49,7 @@ class ParkingSpot < ApplicationRecord
   end
 
   scope :recently_confirmed_free, -> {
-    where(status: 'free').
+    where(status: 'free', blocked: false).
     where.
     not(last_confirmed_free_at: nil).
     order('last_confirmed_free_at DESC') }

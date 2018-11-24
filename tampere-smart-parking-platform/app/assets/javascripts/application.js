@@ -36,10 +36,16 @@ var currentDataLayer;
 
 var refreshDataLayer = function(map) {
   var colors = {
-    free: "#567D46",
-    occupied: "#Df2800",
-    reserved: "#ff7400",
-    blocked: "#cccccc",
+    unblocked: {
+      free: "#567D46",
+      occupied: "#Df2800",
+      reserved: "#ff7400",
+    },
+    blocked: {
+      free: "#cccccc",
+      occupied: "#000000",
+      reserved: "#cccccc",
+    },
     mostRecentlyConfirmedFree: "#76D6FF",
   };
 
@@ -48,7 +54,7 @@ var refreshDataLayer = function(map) {
       return { color: colors['mostRecentlyConfirmedFree'] }
     } else {
       return {
-        color: colors[feature["properties"]["status"]]
+        color: colors[feature["properties"][feature["properties"]["blocked"] ? 'blocked' : 'unblocked']["status"]]
       }
     }
   };
@@ -59,6 +65,7 @@ var refreshDataLayer = function(map) {
       layer.bindPopup(`
         <strong>Friendly Name:</strong> ${feature.properties.friendlyName}<br/>
         <strong>Status:</strong> ${feature.properties.status}<br/>
+        <strong>Blocked?</strong> ${feature.properties.blocked ? 'Yes' : 'No' }<br/>
         <strong>Last Confirmed Free At:</strong> ${feature.properties.lastConfirmedFreeAt}<br/>
         <strong>Address:</strong> ${feature.properties.address}
       `);
