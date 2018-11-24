@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :parking_spots, only: [:create, :index]
   namespace :admin do
     get '/', to: 'dashboard#index'
+    get '/map_data', to: 'dashboard#map_data'
     #resources :dashboard, only: [:index]
   end
 

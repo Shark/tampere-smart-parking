@@ -3,7 +3,11 @@ class DialogFlowController < ApplicationController
   include ActionView::Helpers::DateHelper
 
   def webhook
-    parking_spot = ParkingSpot.order(:created_at).last
+    parking_spot = ParkingSpot.
+                   where.
+                   not(last_confirmed_free_at: nil).
+                   order('last_confirmed_free_at DESC').
+                   first
     escaped_destination = CGI.escape("#{parking_spot.latitude},#{parking_spot.longitude}")
     render json: {
       payload: {
@@ -18,8 +22,8 @@ class DialogFlowController < ApplicationController
               },
               {
                 basicCard: {
-                  title: "Parking Spot at #{parking_spot.address}" || 'Available Parking Spot',
-                  subtitle: "This empty spot was found #{time_ago_in_words(parking_spot.created_at)} ago.",
+                  title: "Nearest available parking spot found at #{parking_spot.address}" || 'Nearest parking spot',
+                  formattedText: "This empty spot was found #{time_ago_in_words(parking_spot.last_confirmed_free_at)} ago.\nTap on Navigate to start navigation using Google Maps.",
                   buttons: [{
                     title: 'Navigate',
                     openUrlAction: {

@@ -16,13 +16,27 @@ class ParkingSpotsController < ApplicationController
 
   def create
     parking_spot = ParkingSpot.find_by!(friendly_name: friendly_name)
-    parking_spot.touch(:last_confirmed_free_at)
-    head :ok
+    parking_spot.assign_attributes(parking_spot_params)
+
+    if parking_spot.status == 'free' && parking_spot.status_was != 'free'
+      parking_spot.last_confirmed_free_at = Time.now
+    end
+
+    if parking_spot.valid?
+      parking_spot.save!
+      head :ok
+    else
+      head :unprocessable_entity
+    end
   end
 
   private
 
   def friendly_name
     params.require(:parking_spot).require(:friendly_name)
+  end
+
+  def parking_spot_params
+    params.require(:parking_spot).permit(:status)
   end
 end

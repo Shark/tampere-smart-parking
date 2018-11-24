@@ -1,25 +1,30 @@
 module Admin
   class DashboardController < ApplicationController
     def index
+    end
+
+    def map_data
       spots = ParkingSpot.all.pluck(:polygon)
-      better_spots = spots.map do |spot|
+
+      features = ParkingSpot.all.map do |spot|
         {
           "type": "Feature",
           "geometry": {
             "type": "Polygon",
-            "coordinates": [spot.reverse.map(&:reverse)]
+            "coordinates": [spot.polygon.reverse.map(&:reverse)]
           },
           "properties": {
-            "status": %w(occupied free reserved).sample
-          },
+            "status": spot.status
+          }
         }
       end
 
       feature_collection = {
         "type": "FeatureCollection",
-        "features": better_spots,
+        "features": features,
       }
-      @parking_spots = feature_collection
+
+      render json: { map_data: feature_collection }
     end
   end
 end
