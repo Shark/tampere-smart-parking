@@ -1,5 +1,7 @@
 {
   "name": "tampere-smart-parking-platform",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "leaflet-draw": "^1.0.4"
+  }
 }

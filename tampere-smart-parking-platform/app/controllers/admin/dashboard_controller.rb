@@ -10,7 +10,7 @@ module Admin
             "coordinates": [spot.reverse.map(&:reverse)]
           },
           "properties": {
-            "status": "occupied"
+            "status": %w(occupied free reserved).sample
           },
         }
       end

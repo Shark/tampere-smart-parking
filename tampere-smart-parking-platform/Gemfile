@@ -29,6 +29,7 @@ gem 'haml'
 gem 'jquery-rails'
 gem 'leaflet-rails'
 gem 'enumerize'
+gem "geokit"
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

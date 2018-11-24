@@ -13,9 +13,33 @@
 //= require rails-ujs
 //= require jquery
 //= require leaflet
+//= require leaflet.draw
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+
+
+function disableParkingSpots (polygon) {
+  $.ajax(url: "",
+    data: "", 
+    method: "patch",
+
+  )
+}
+
+$.ajax(id, {
+  contentType: 'application/json',
+  dataType: 'json',
+  success:function(result){
+    geojson.remove(e.target);
+    cityData = result.feature_collection;
+    datasetValues = result.city_values;
+    geojson = L.geoJson(cityData, {
+      style: style,
+      onEachFeature: onEachCityFeature
+    }).addTo(mapid);
+    mapid.fitBounds(e.target.getBounds());
+  }
 
 $(document).on('turbolinks:load',  function () {
 
@@ -43,5 +67,48 @@ $(document).on('turbolinks:load',  function () {
   L.geoJSON(parkingSpots, {
     style: style
   }).addTo(map);
+
+  var editableLayers = new L.FeatureGroup();
+  map.addLayer(editableLayers);
+
+  var drawPluginOptions = {
+    position: 'topright',
+    draw: {
+      polygon: {
+        allowIntersection: false, // Restricts shapes to simple polygons
+        drawError: {
+          color: '#e1e100', // Color the shape will turn when intersects
+          message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+        },
+        shapeOptions: {
+          color: '#97009c'
+        }
+      },
+      // disable toolbar item by setting it to false
+      polyline: false,
+      circle: false, // Turns off this drawing tool
+      rectangle: false,
+      marker: false,
+      circlemarker: false
+      },
+    edit: false
+  };
+
+  // Initialise the draw control and pass it the FeatureGroup of editable layers
+  var drawControl = new L.Control.Draw(drawPluginOptions);
+  map.addControl(drawControl);
+
+  var editableLayers = new L.FeatureGroup();
+  map.addLayer(editableLayers);
+
+  map.on('draw:created', function(e) {
+    var type = e.layerType,
+    layer = e.layer;
+    polygon = layer._latlngs
+
+    window.test = polygon
+
+    editableLayers.addLayer(layer);
+  });
 
 });
