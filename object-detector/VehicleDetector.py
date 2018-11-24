@@ -63,10 +63,9 @@ for box in boxes:
   if not box.occupied:
     new_image = cv2.rectangle(new_image, (box.x1, box.y1), (box.x2, box.y2), (0,255,0), 3)
   
-  requests.post('https://tampere.sh4rk.pw/admin/parking_spots', params = {
-    'friendly_name': box.friendly_name,
-    'status': 'occupied' if box.occupied else 'free'
-  })
+  status = 'occupied' if box.occupied else 'free'
+  result = requests.post(f'https://tampere.sh4rk.pw/parking_spots?parking_spot%5Bfriendly_name%5D={box.friendly_name}&parking_spot%5Bstatuts%5D={status}')
+  print(result.status_code)
 
 cv2.imshow("FinalImage", new_image)
 cv2.waitKey(0)
