@@ -1,0 +1,388 @@
+{
+  "type": "FeatureCollection",
+  "totalFeatures": 1013,
+  "features": [
+    {
+      "type": "Feature",
+      "id": "KESKUSTAN_PYSAKOINTI_VIEW.fid--f94bcd7_1674323eebf_-2030",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              24486977.2496724,
+              6820337.54034133
+            ],
+            [
+              24486977.5053959,
+              6820335.51994425
+            ],
+            [
+              24487019.4275455,
+              6820341.57113352
+            ],
+            [
+              24487019.0315866,
+              6820343.45150308
+            ],
+            [
+              24486977.2496724,
+              6820337.54034133
+            ]
+          ]
+        ]
+      },
+      "geometry_name": "GEOLOC",
+      "properties": {
+        "ALUEEN_NUMERO": 1022,
+        "KOHDETYYPPI": "K",
+        "PAIKKATYYPPI": "S",
+        "PAIKKOJEN_LUKUMAARA": 7,
+        "RAJOITUSTYYPPI": "M",
+        "YOPYSAKOINTIKIELTO": 0,
+        "HINTA": 1.6,
+        "MAX_AIKA": 4,
+        "RAJ_AIKA_ALKAA_ARK": 8,
+        "RAJ_AIKA_PAATTYY_ARK": 18,
+        "RAJ_AIKA_ALKAA_LA": 8,
+        "RAJ_AIKA_PAATTYY_LA": 16,
+        "RAJ_AIKA_ALKAA_SU": 0,
+        "RAJ_AIKA_PAATTYY_SU": 0,
+        "ASUKASPYSAKOINTI": 0,
+        "TALVIKUNNOSSAPITO": 0,
+        "MAKSUVYOHYKE": 2,
+        "MUUTA": "Suunn.pääll. 83§/13.05.2016, Piir.no 1/17014",
+        "PAIVITYS_PVM": "23.5.2016, SMu"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "KESKUSTAN_PYSAKOINTI_VIEW.fid--f94bcd7_1674323eebf_-202f",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              24487029.1532862,
+              6820332.78940761
+            ],
+            [
+              24487039.0440098,
+              6820281.94941581
+            ],
+            [
+              24487040.7680809,
+              6820282.20946692
+            ],
+            [
+              24487031.2733162,
+              6820333.11947248
+            ],
+            [
+              24487029.1532862,
+              6820332.78940761
+            ]
+          ]
+        ]
+      },
+      "geometry_name": "GEOLOC",
+      "properties": {
+        "ALUEEN_NUMERO": 1023,
+        "KOHDETYYPPI": "K",
+        "PAIKKATYYPPI": "S",
+        "PAIKKOJEN_LUKUMAARA": 9,
+        "RAJOITUSTYYPPI": "M",
+        "YOPYSAKOINTIKIELTO": 0,
+        "HINTA": 1.6,
+        "MAX_AIKA": 4,
+        "RAJ_AIKA_ALKAA_ARK": 8,
+        "RAJ_AIKA_PAATTYY_ARK": 18,
+        "RAJ_AIKA_ALKAA_LA": 8,
+        "RAJ_AIKA_PAATTYY_LA": 16,
+        "RAJ_AIKA_ALKAA_SU": 0,
+        "RAJ_AIKA_PAATTYY_SU": 0,
+        "ASUKASPYSAKOINTI": 0,
+        "TALVIKUNNOSSAPITO": 0,
+        "MAKSUVYOHYKE": 2,
+        "MUUTA": "Suunn.pääll. 83§/13.05.2016, Piir.no 1/17014",
+        "PAIVITYS_PVM": "23.5.2016, SMu"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "KESKUSTAN_PYSAKOINTI_VIEW.fid--f94bcd7_1674323eebf_-202e",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              24487022.8921859,
+              6820413.80533002
+            ],
+            [
+              24487018.825358,
+              6820413.65530053
+            ],
+            [
+              24487025.4576697,
+              6820368.32639185
+            ],
+            [
+              24487029.4007605,
+              6820368.85649603
+            ],
+            [
+              24487022.8921859,
+              6820413.80533002
+            ]
+          ]
+        ]
+      },
+      "geometry_name": "GEOLOC",
+      "properties": {
+        "ALUEEN_NUMERO": 1027,
+        "KOHDETYYPPI": "E",
+        "PAIKKATYYPPI": "K",
+        "PAIKKOJEN_LUKUMAARA": 17,
+        "RAJOITUSTYYPPI": "M",
+        "YOPYSAKOINTIKIELTO": 0,
+        "HINTA": 1.6,
+        "MAX_AIKA": 4,
+        "RAJ_AIKA_ALKAA_ARK": 8,
+        "RAJ_AIKA_PAATTYY_ARK": 18,
+        "RAJ_AIKA_ALKAA_LA": 8,
+        "RAJ_AIKA_PAATTYY_LA": 16,
+        "RAJ_AIKA_ALKAA_SU": 0,
+        "RAJ_AIKA_PAATTYY_SU": 0,
+        "ASUKASPYSAKOINTI": 0,
+        "TALVIKUNNOSSAPITO": 0,
+        "MAKSUVYOHYKE": 2,
+        "MUUTA": "Suunn.pääll. 83§/13.05.2016, Piir.no 1/17014",
+        "PAIVITYS_PVM": "23.5.2016, SMu"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "KESKUSTAN_PYSAKOINTI_VIEW.fid--f94bcd7_1674323eebf_-202d",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              24487011.3433844,
+              6820141.17174817
+            ],
+            [
+              24487011.3433844,
+              6820144.24235164
+            ],
+            [
+              24486984.5336665,
+              6820143.2921649
+            ],
+            [
+              24486985.2513421,
+              6820127.40904332
+            ],
+            [
+              24487016.5650925,
+              6820127.87913571
+            ],
+            [
+              24487016.8538126,
+              6820130.46964483
+            ],
+            [
+              24487043.6222847,
+              6820135.71067488
+            ],
+            [
+              24487060.2278115,
+              6820144.48239882
+            ],
+            [
+              24487054.5359021,
+              6820153.98426626
+            ],
+            [
+              24487041.4857564,
+              6820147.09291188
+            ],
+            [
+              24487023.9233289,
+              6820143.2921649
+            ],
+            [
+              24487011.3433844,
+              6820141.17174817
+            ]
+          ]
+        ]
+      },
+      "geometry_name": "GEOLOC",
+      "properties": {
+        "ALUEEN_NUMERO": 1024,
+        "KOHDETYYPPI": "E",
+        "PAIKKATYYPPI": "K",
+        "PAIKKOJEN_LUKUMAARA": 40,
+        "RAJOITUSTYYPPI": "M",
+        "YOPYSAKOINTIKIELTO": 0,
+        "HINTA": 1,
+        "MAX_AIKA": 10,
+        "RAJ_AIKA_ALKAA_ARK": 8,
+        "RAJ_AIKA_PAATTYY_ARK": 18,
+        "RAJ_AIKA_ALKAA_LA": 8,
+        "RAJ_AIKA_PAATTYY_LA": 16,
+        "RAJ_AIKA_ALKAA_SU": 0,
+        "RAJ_AIKA_PAATTYY_SU": 0,
+        "ASUKASPYSAKOINTI": 0,
+        "TALVIKUNNOSSAPITO": 0,
+        "MAKSUVYOHYKE": 3,
+        "MUUTA": "Suunn.pääll. 83§/13.5.2016, Piir.no. 1/17012, Tjilap. 110§/17.6.2016",
+        "PAIVITYS_PVM": "16.5.2017, SMu"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "KESKUSTAN_PYSAKOINTI_VIEW.fid--f94bcd7_1674323eebf_-202c",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              24487078.021215,
+              6820231.57951639
+            ],
+            [
+              24487079.4400677,
+              6820217.80680958
+            ],
+            [
+              24487079.6792929,
+              6820203.81405953
+            ],
+            [
+              24487091.5498111,
+              6820202.86387279
+            ],
+            [
+              24487092.4902135,
+              6820215.67639088
+            ],
+            [
+              24487092.4902135,
+              6820224.21806962
+            ],
+            [
+              24487091.5498111,
+              6820233.47988988
+            ],
+            [
+              24487078.021215,
+              6820231.57951639
+            ]
+          ]
+        ]
+      },
+      "geometry_name": "GEOLOC",
+      "properties": {
+        "ALUEEN_NUMERO": 1025,
+        "KOHDETYYPPI": "E",
+        "PAIKKATYYPPI": "K",
+        "PAIKKOJEN_LUKUMAARA": 15,
+        "RAJOITUSTYYPPI": "M",
+        "YOPYSAKOINTIKIELTO": 0,
+        "HINTA": 1,
+        "MAX_AIKA": 10,
+        "RAJ_AIKA_ALKAA_ARK": 8,
+        "RAJ_AIKA_PAATTYY_ARK": 18,
+        "RAJ_AIKA_ALKAA_LA": 8,
+        "RAJ_AIKA_PAATTYY_LA": 16,
+        "RAJ_AIKA_ALKAA_SU": 0,
+        "RAJ_AIKA_PAATTYY_SU": 0,
+        "ASUKASPYSAKOINTI": 0,
+        "TALVIKUNNOSSAPITO": 0,
+        "MAKSUVYOHYKE": 3,
+        "MUUTA": "Yla §79/10.3.2009, Sallittu kiinteistötoimen luvalla",
+        "PAIVITYS_PVM": "24.5.2016 SMu"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "KESKUSTAN_PYSAKOINTI_VIEW.fid--f94bcd7_1674323eebf_-202b",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              24487013.9418647,
+              6820499.09209179
+            ],
+            [
+              24487017.851959,
+              6820472.33683347
+            ],
+            [
+              24487074.9690317,
+              6820480.95852793
+            ],
+            [
+              24487086.9962836,
+              6820475.54746447
+            ],
+            [
+              24487099.0152863,
+              6820502.30272279
+            ],
+            [
+              24487093.0016604,
+              6820505.50335183
+            ],
+            [
+              24487095.1134412,
+              6820509.61415974
+            ],
+            [
+              24487083.4821483,
+              6820514.42510526
+            ],
+            [
+              24487077.1715531,
+              6820515.22526251
+            ],
+            [
+              24487012.7457389,
+              6820505.8034108
+            ],
+            [
+              24487013.9418647,
+              6820499.09209179
+            ]
+          ]
+        ]
+      },
+      "geometry_name": "GEOLOC",
+      "properties": {
+        "ALUEEN_NUMERO": 1032,
+        "KOHDETYYPPI": "E",
+        "PAIKKATYYPPI": null,
+        "PAIKKOJEN_LUKUMAARA": 96,
+        "RAJOITUSTYYPPI": "M",
+        "YOPYSAKOINTIKIELTO": 0,
+        "HINTA": 1.6,
+        "MAX_AIKA": 4,
+        "RAJ_AIKA_ALKAA_ARK": 8,
+        "RAJ_AIKA_PAATTYY_ARK": 18,
+        "RAJ_AIKA_ALKAA_LA": 8,
+        "RAJ_AIKA_PAATTYY_LA": 16,
+        "RAJ_AIKA_ALKAA_SU": 0,
+        "RAJ_AIKA_PAATTYY_SU": 0,
+        "ASUKASPYSAKOINTI": 0,
+        "TALVIKUNNOSSAPITO": 0,
+        "MAKSUVYOHYKE": 2,
+        "MUUTA": "Suunn.pääll. 83§/13.05.2016, Piir.no 1/17014",
+        "PAIVITYS_PVM": "23.5.2016, SMu"
+      }
+    }
+  ]
+}

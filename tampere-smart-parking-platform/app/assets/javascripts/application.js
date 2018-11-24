@@ -11,6 +11,24 @@
 // about supported directives.
 //
 //= require rails-ujs
+//= require jquery
+//= require leaflet
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+
+$(document).on('turbolinks:load',  function (){
+  var map = L.map('map').setView([61.497753, 23.760954], 14);
+  var layerURL = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'; // OSM Maps at the moment.
+  L.tileLayer(layerURL).addTo(map);
+
+  var myStyle = {
+    "color": "#ff7800",
+    "weight": 5,
+    "opacity": 1
+  };
+
+  L.geoJSON(feature, {
+    style: myStyle,
+  }).addTo(map);
+});
