@@ -12,5 +12,5 @@ class ParkingSpot < ApplicationRecord
     end
   end
 
-  after_validation :reverse_geocode
+  # after_validation :reverse_geocode
 end
