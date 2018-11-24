@@ -53,8 +53,9 @@ var refreshDataLayer = function(map) {
     if(feature['properties']['isMostRecentlyConfirmedFree']) {
       return { color: colors['mostRecentlyConfirmedFree'] }
     } else {
+      blocked_status = feature["properties"]["blocked"] ? 'blocked' : 'unblocked'
       return {
-        color: colors[feature["properties"][feature["properties"]["blocked"] ? 'blocked' : 'unblocked']["status"]]
+        color: colors[blocked_status][feature["properties"]["status"]]
       }
     }
   };
