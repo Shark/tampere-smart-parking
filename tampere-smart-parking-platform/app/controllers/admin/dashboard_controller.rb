@@ -8,7 +8,7 @@ module Admin
         return render json: { map_data: cache.content }
       end
 
-      last_confirmed_free_id = ParkingSpot.recently_confirmed_free.first.id
+      last_confirmed_free_id = ParkingSpot.recently_confirmed_free.first&.id
       features = ParkingSpot.all.map do |spot|
         {
           "type": "Feature",
