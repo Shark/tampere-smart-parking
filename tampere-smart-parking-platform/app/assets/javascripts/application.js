@@ -17,31 +17,39 @@
 //= require turbolinks
 //= require_tree .
 
-$(document).on('turbolinks:load',  function () {
+var currentDataLayer;
 
-  var parkingSpots = $('.parkingSpots').data('parkingspots');
-
-  var reserved = "#ff7400";
-  var occupied = "#Df2800";
-  var free = "#567D46"
+var refreshDataLayer = function(map) {
   var colors = {
-    free: free,
-    occupied: occupied,
-    reserved: reserved,
-  }
+    free: "#567D46",
+    occupied: "#Df2800",
+    reserved: "#ff7400",
+  };
 
-  function style(feature) {
+  var style = function(feature) {
     return {
       color: colors[feature["properties"]["status"]]
     }
-  }
+  };
 
+  fetch('/admin/map_data')
+    .then(data => data.json())
+    .then(data => {
+      var newDataLayer = L.geoJSON(data['map_data'], { style: style }).addTo(map);
+
+      if(currentDataLayer) {
+        map.removeLayer(currentDataLayer)
+      }
+      currentDataLayer = newDataLayer;
+    })
+};
+
+$(document).on('turbolinks:load',  function () {
   var map = L.map('map').setView([61.497753, 23.760954], 14);
   var layerURL = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'; // OSM Maps at the moment.
   L.tileLayer(layerURL).addTo(map);
 
-  L.geoJSON(parkingSpots, {
-    style: style
-  }).addTo(map);
 
+  setInterval(refreshDataLayer.bind(undefined, map), 2000);
+  refreshDataLayer(map);
 });
