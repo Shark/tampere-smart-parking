@@ -32,10 +32,26 @@ var refreshDataLayer = function(map) {
     }
   };
 
+  var onEachFeature = function(feature, layer) {
+    // does this feature have a property named popupContent?
+    if (feature.properties && feature.properties) {
+      layer.bindPopup(`
+        <strong>Friendly Name:</strong> ${feature.properties.friendlyName}<br/>
+        <strong>Status:</strong> ${feature.properties.status}<br/>
+        <strong>Last Confirmed Free At:</strong> ${feature.properties.lastConfirmedFreeAt}
+      `);
+    }
+  }
+
+
   fetch('/admin/map_data')
     .then(data => data.json())
     .then(data => {
-      var newDataLayer = L.geoJSON(data['map_data'], { style: style }).addTo(map);
+      var newDataLayer = L.geoJSON(
+                           data['map_data'], {
+                             style: style,
+                             onEachFeature: onEachFeature
+                           }).addTo(map);
 
       if(currentDataLayer) {
         map.removeLayer(currentDataLayer)
