@@ -6,5 +6,7 @@ Rails.application.routes.draw do
     #resources :dashboard, only: [:index]
   end
 
+  post '/dialog_flow', to: 'dialog_flow#webhook'
+
   get '/.well-known/health_check', to: 'health#health_check'
 end
