@@ -26,11 +26,15 @@ Request:
 }
 ```
 
+See [`db/parking_spots.yml`](db/parking_spots.yml) for a list of friendly names.
+
 Response:
 
 200 OK
 
 ## Deploy
+
+The platform is deployed at https://tampere.sh4rk.pw.
 
 ```
 git remote add deploy ...
