@@ -15,14 +15,14 @@ class Box:
     self.occupied = occupied
 
 boxes = [
-  Box(friendly_name=1, x1=75,  y1=150, x2=345,  y2=275, occupied=False),
-  Box(friendly_name=2, x1=350, y1=140, x2=620,  y2=260, occupied=False),
-  Box(friendly_name=3, x1=625, y1=115, x2=905,  y2=240, occupied=False),
-  Box(friendly_name=4, x1=905, y1=100, x2=1175, y2=220, occupied=False),
-  Box(friendly_name=5, x1=20,  y1=660, x2=315,  y2=825, occupied=False),
-  Box(friendly_name=6, x1=335, y1=645, x2=640,  y2=810, occupied=False),
-  Box(friendly_name=7, x1=645, y1=635, x2=965,  y2=800, occupied=False),
-  Box(friendly_name=8, x1=965, y1=625, x2=1265, y2=800, occupied=False)
+  Box(friendly_name='india-x-ray-whiskey', x1=75,  y1=150, x2=345,  y2=275, occupied=False),
+  Box(friendly_name='india-papa-lima',     x1=350, y1=140, x2=620,  y2=260, occupied=False),
+  Box(friendly_name='india-papa-sierra',   x1=625, y1=115, x2=905,  y2=240, occupied=False),
+  Box(friendly_name='kilo-hotel-lima',     x1=905, y1=100, x2=1175, y2=220, occupied=False),
+  Box(friendly_name='charlie-papa-alpha',  x1=20,  y1=660, x2=315,  y2=825, occupied=False),
+  Box(friendly_name='mike-mike-zulu',      x1=335, y1=645, x2=640,  y2=810, occupied=False),
+  Box(friendly_name='quebec-foxtrot-mike', x1=645, y1=635, x2=965,  y2=800, occupied=False),
+  Box(friendly_name='quebec-bravo-lima',   x1=965, y1=625, x2=1265, y2=800, occupied=False)
 ]
 
 def box_contains(outer_box, object_coordinates):

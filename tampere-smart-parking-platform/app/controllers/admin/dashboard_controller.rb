@@ -14,7 +14,9 @@ module Admin
             "coordinates": [spot.polygon.reverse.map(&:reverse)]
           },
           "properties": {
-            "status": spot.status
+            "friendlyName": spot.friendly_name,
+            "status": spot.status,
+            "lastConfirmedFreeAt": spot.last_confirmed_free_at
           }
         }
       end
