@@ -1,5 +1,4 @@
 *.pyc
-/models
 object-detector/.vscode
 object-detector/test.jpg
 object-detector/test-detected.jpg

@@ -5,6 +5,7 @@ import time
 import numpy as np
 import requests
 import collections
+import imutils
 
 Detection = collections.namedtuple('Detection', 'x1 y1 x2 y2')
 
@@ -45,8 +46,8 @@ def intersect(spot, detection_coordinates):
 
 def detect_cars():
   detector = ObjectDetection()
-  detector.setModelTypeAsRetinaNet()
-  detector.setModelPath( os.path.join(execution_path , "models/resnet50_coco_best_v2.0.1.h5"))
+  detector.setModelTypeAsTinyYOLOv3()
+  detector.setModelPath( os.path.join(execution_path , "models/yolo-tiny.h5"))
   detector.loadModel()
   custom = detector.CustomObjects(car=True)
   return detector.detectCustomObjectsFromImage(custom_objects=custom, input_image=os.path.join(execution_path , 'test.jpg'), output_image_path=os.path.join(execution_path , 'test-detected.jpg'), minimum_percentage_probability=15)
@@ -77,6 +78,16 @@ def print_occupation(parking_spots):
     print(f'Box: {spot.friendly_name}:{spot.occupied}')
   print('--')
 
+def detection_preview(parking_spots):
+  cv2.destroyAllWindows()
+  img = cv2.imread('test-detected.jpg')
+  resized = imutils.resize(img, width=640)
+  ratio = resized.shape[0] / float(img.shape[0])
+  for spot in parking_spots:
+    cv2.rectangle(resized, (int(spot.x1 * ratio), int(spot.y1 * ratio)), (int(spot.x2 * ratio), int(spot.y2 * ratio)), (0,255,0), 3) if not spot.occupied else 0
+  cv2.imshow('detection preview', resized)
+  cv2.waitKey(500)
+
 execution_path = os.getcwd()
 camera = cv2.VideoCapture(1)
 try:
@@ -89,7 +100,7 @@ try:
     print_occupation(parking_spots)
     update_status_backend(parking_spots)
     print('===========')
-    time.sleep(5)
+    detection_preview(parking_spots)
 except KeyboardInterrupt:
   print('interrupted')
 
