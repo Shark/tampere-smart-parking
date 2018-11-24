@@ -13,9 +13,24 @@
 //= require rails-ujs
 //= require jquery
 //= require leaflet
+//= require leaflet.draw
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+
+
+function toggleParkingSpots (polygon, mode) {
+  $.ajax({
+    url: "/toggle_parking_spots",
+    type: "PATCH",
+    data: {
+      parking_spot: {
+        polygon: JSON.stringify(polygon)
+      },
+      mode: mode
+    }
+  })
+};
 
 var currentDataLayer;
 
@@ -24,11 +39,17 @@ var refreshDataLayer = function(map) {
     free: "#567D46",
     occupied: "#Df2800",
     reserved: "#ff7400",
+    blocked: "#cccccc",
+    mostRecentlyConfirmedFree: "#76D6FF",
   };
 
   var style = function(feature) {
-    return {
-      color: colors[feature["properties"]["status"]]
+    if(feature['properties']['isMostRecentlyConfirmedFree']) {
+      return { color: colors['mostRecentlyConfirmedFree'] }
+    } else {
+      return {
+        color: colors[feature["properties"]["status"]]
+      }
     }
   };
 
@@ -38,7 +59,8 @@ var refreshDataLayer = function(map) {
       layer.bindPopup(`
         <strong>Friendly Name:</strong> ${feature.properties.friendlyName}<br/>
         <strong>Status:</strong> ${feature.properties.status}<br/>
-        <strong>Last Confirmed Free At:</strong> ${feature.properties.lastConfirmedFreeAt}
+        <strong>Last Confirmed Free At:</strong> ${feature.properties.lastConfirmedFreeAt}<br/>
+        <strong>Address:</strong> ${feature.properties.address}
       `);
     }
   }
@@ -68,4 +90,63 @@ $(document).on('turbolinks:load',  function () {
 
   setInterval(refreshDataLayer.bind(undefined, map), 2000);
   refreshDataLayer(map);
+
+  var editableLayers = new L.FeatureGroup();
+  map.addLayer(editableLayers);
+
+  var drawPluginOptions = {
+    position: 'topright',
+    draw: {
+      polygon: {
+        allowIntersection: false,
+        drawError: {
+          color: '#e1e100',
+          message: '<strong>Oh snap!<strong> you can\'t draw that!'
+        },
+        shapeOptions: {
+          color: '#97009c'
+        }
+      },
+      polyline: false,
+      circle: false,
+      rectangle: false,
+      marker: false,
+      circlemarker: false
+      },
+    edit: false
+  };
+
+  // Initialise the draw control and pass it the FeatureGroup of editable layers
+  var drawControlEnable = new L.Control.Draw(drawPluginOptions);
+  map.addControl(drawControlEnable);
+  $(drawControlEnable.getContainer()).addClass("enable-spots");
+
+  var drawControlDisable = new L.Control.Draw(drawPluginOptions);
+  map.addControl(drawControlDisable);
+  $(drawControlDisable.getContainer()).addClass("disable-spots");
+
+  $(window).on('load', function() {
+    $('.disable-spots').find('.leaflet-draw-draw-polygon').click(function() {
+      $('#map').data('mode', 'disable');
+    });
+
+    $('.enable-spots').find('.leaflet-draw-draw-polygon').click(function() {
+      $('#map').data('mode', 'enable');
+    });
+  });
+
+  var editableLayers = new L.FeatureGroup();
+  map.addLayer(editableLayers);
+
+  map.on('draw:created', function(e) {
+    var mode = $('#map').data('mode');
+    var type = e.layerType,
+    layer = e.layer;
+    polygon = layer._latlngs;
+    polygonAsArray = polygon[0].map( function(value, index) {
+      return new Array(value.lat, value.lng);
+    });
+    toggleParkingSpots(polygonAsArray, mode);
+  });
+
 });

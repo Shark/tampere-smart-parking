@@ -4,8 +4,11 @@ module Admin
     end
 
     def map_data
-      spots = ParkingSpot.all.pluck(:polygon)
+      if cache = Cache.find_by(key: 'map_data')
+        return render json: { map_data: cache.content }
+      end
 
+      last_confirmed_free_id = ParkingSpot.recently_confirmed_free.first.id
       features = ParkingSpot.all.map do |spot|
         {
           "type": "Feature",
@@ -16,7 +19,9 @@ module Admin
           "properties": {
             "friendlyName": spot.friendly_name,
             "status": spot.status,
-            "lastConfirmedFreeAt": spot.last_confirmed_free_at
+            "address": spot.address,
+            "lastConfirmedFreeAt": spot.last_confirmed_free_at,
+            "isMostRecentlyConfirmedFree": spot.id == last_confirmed_free_id
           }
         }
       end
@@ -25,6 +30,8 @@ module Admin
         "type": "FeatureCollection",
         "features": features,
       }
+
+      Cache.create!(key: 'map_data', content: feature_collection)
 
       render json: { map_data: feature_collection }
     end

@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_24_142150) do
+ActiveRecord::Schema.define(version: 2018_11_24_191223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "caches", force: :cascade do |t|
+    t.string "key"
+    t.json "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_caches_on_key", unique: true
+  end
 
   create_table "parking_spots", force: :cascade do |t|
     t.decimal "latitude", precision: 9, scale: 6
@@ -21,10 +29,10 @@ ActiveRecord::Schema.define(version: 2018_11_24_142150) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "address"
+    t.string "status", default: "free"
     t.json "polygon"
     t.string "friendly_name"
     t.datetime "last_confirmed_free_at"
-    t.string "status", default: "free"
     t.index ["friendly_name"], name: "index_parking_spots_on_friendly_name", unique: true
   end
 
