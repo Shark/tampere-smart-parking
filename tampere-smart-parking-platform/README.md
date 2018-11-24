@@ -20,8 +20,8 @@ Request:
 ```
 {
   "parking_spot": {
-    "latitude": 1.234,
-    "longitude": 5.678
+    "friendly_name": "",
+    "status": "free|occupied|reserved"
   }
 }
 ```

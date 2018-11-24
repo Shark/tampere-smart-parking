@@ -23,7 +23,7 @@ class DialogFlowController < ApplicationController
               {
                 basicCard: {
                   title: "Parking Spot at #{parking_spot.address}" || 'Available Parking Spot',
-                  subtitle: "This empty spot was found #{time_ago_in_words(parking_spot.created_at)} ago.",
+                  subtitle: "This empty spot was found #{time_ago_in_words(parking_spot.last_confirmed_free_at)} ago.",
                   buttons: [{
                     title: 'Navigate',
                     openUrlAction: {

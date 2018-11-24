@@ -1,6 +1,7 @@
 class ParkingSpot < ApplicationRecord
   extend Enumerize
-    enumerize :status, in: %w(free ocupied reserved)
+  enumerize :status, in: %w(free occupied reserved)
+
   # reverse geocoding is stored in the address attribute
   reverse_geocoded_by :latitude, :longitude do |parking_spot, results|
     if geo = results.first
