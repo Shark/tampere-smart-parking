@@ -24,11 +24,16 @@ var refreshDataLayer = function(map) {
     free: "#567D46",
     occupied: "#Df2800",
     reserved: "#ff7400",
+    mostRecentlyConfirmedFree: "#76D6FF"
   };
 
   var style = function(feature) {
-    return {
-      color: colors[feature["properties"]["status"]]
+    if(feature['properties']['isMostRecentlyConfirmedFree']) {
+      return { color: colors['mostRecentlyConfirmedFree'] }
+    } else {
+      return {
+        color: colors[feature["properties"]["status"]]
+      }
     }
   };
 
@@ -38,7 +43,8 @@ var refreshDataLayer = function(map) {
       layer.bindPopup(`
         <strong>Friendly Name:</strong> ${feature.properties.friendlyName}<br/>
         <strong>Status:</strong> ${feature.properties.status}<br/>
-        <strong>Last Confirmed Free At:</strong> ${feature.properties.lastConfirmedFreeAt}
+        <strong>Last Confirmed Free At:</strong> ${feature.properties.lastConfirmedFreeAt}<br/>
+        <strong>Address:</strong> ${feature.properties.address}
       `);
     }
   }

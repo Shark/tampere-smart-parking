@@ -4,8 +4,7 @@ module Admin
     end
 
     def map_data
-      spots = ParkingSpot.all.pluck(:polygon)
-
+      last_confirmed_free_id = ParkingSpot.recently_confirmed_free.first.id
       features = ParkingSpot.all.map do |spot|
         {
           "type": "Feature",
@@ -16,7 +15,9 @@ module Admin
           "properties": {
             "friendlyName": spot.friendly_name,
             "status": spot.status,
-            "lastConfirmedFreeAt": spot.last_confirmed_free_at
+            "address": spot.address,
+            "lastConfirmedFreeAt": spot.last_confirmed_free_at,
+            "isMostRecentlyConfirmedFree": spot.id == last_confirmed_free_id
           }
         }
       end

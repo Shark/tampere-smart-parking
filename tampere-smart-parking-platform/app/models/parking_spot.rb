@@ -16,4 +16,6 @@ class ParkingSpot < ApplicationRecord
   end
 
   # after_validation :reverse_geocode
+
+  scope :recently_confirmed_free, -> { where.not(last_confirmed_free_at: nil).order('last_confirmed_free_at DESC') }
 end

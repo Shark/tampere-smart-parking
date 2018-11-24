@@ -3,12 +3,9 @@ class DialogFlowController < ApplicationController
   include ActionView::Helpers::DateHelper
 
   def webhook
-    parking_spot = ParkingSpot.
-                   where.
-                   not(last_confirmed_free_at: nil).
-                   order('last_confirmed_free_at DESC').
-                   first
+    parking_spot = ParkingSpot.recently_confirmed_free.first
     escaped_destination = CGI.escape("#{parking_spot.latitude},#{parking_spot.longitude}")
+
     render json: {
       payload: {
         google: {
