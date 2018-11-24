@@ -3,8 +3,11 @@ import os
 import cv2
 import time
 import numpy as np
+import requests
+
 class Box:
-  def __init__(self, x1=0,y1=0, x2=0, y2=0, occupied=False):
+  def __init__(self, friendly_name='Alpha', x1=0,y1=0, x2=0, y2=0, occupied=False):
+    self.friendly_name = friendly_name
     self.x1 = x1
     self.y1 = y1
     self.x2 = x2
@@ -12,14 +15,14 @@ class Box:
     self.occupied = occupied
 
 boxes = [
-  Box(x1=75, y1=150, x2=345, y2=275, occupied=False),
-  Box(x1=350, y1=140, x2=620, y2=260, occupied=False),
-  Box(x1=625, y1=115, x2=905, y2=240, occupied=False),
-  Box(x1=905, y1=100, x2=1175, y2=220, occupied=False),
-  Box(x1=20, y1=660, x2=315, y2=825, occupied=False),
-  Box(x1=335, y1=645, x2=640, y2=810, occupied=False),
-  Box(x1=645, y1=635, x2=965, y2=800, occupied=False),
-  Box(x1=965, y1=625, x2=1265, y2=800, occupied=False)
+  Box(friendly_name=1, x1=75,  y1=150, x2=345,  y2=275, occupied=False),
+  Box(friendly_name=2, x1=350, y1=140, x2=620,  y2=260, occupied=False),
+  Box(friendly_name=3, x1=625, y1=115, x2=905,  y2=240, occupied=False),
+  Box(friendly_name=4, x1=905, y1=100, x2=1175, y2=220, occupied=False),
+  Box(friendly_name=5, x1=20,  y1=660, x2=315,  y2=825, occupied=False),
+  Box(friendly_name=6, x1=335, y1=645, x2=640,  y2=810, occupied=False),
+  Box(friendly_name=7, x1=645, y1=635, x2=965,  y2=800, occupied=False),
+  Box(friendly_name=8, x1=965, y1=625, x2=1265, y2=800, occupied=False)
 ]
 
 def box_contains(outer_box, object_coordinates):
@@ -27,7 +30,6 @@ def box_contains(outer_box, object_coordinates):
 
   return object_box.x1 >= outer_box.x1 and object_box.y1 >= outer_box.y1 and object_box.x2 <= outer_box.x2 and object_box.y2 <= outer_box.y2
 
-# Detect Objects
 execution_path = os.getcwd()
 
 camera = cv2.VideoCapture(1)
@@ -60,6 +62,11 @@ for box in boxes:
 
   if not box.occupied:
     new_image = cv2.rectangle(new_image, (box.x1, box.y1), (box.x2, box.y2), (0,255,0), 3)
+  
+  requests.post('https://tampere.sh4rk.pw/admin/parking_spots', params = {
+    'friendly_name': box.friendly_name,
+    'status': 'occupied' if box.occupied else 'free'
+  })
 
 cv2.imshow("FinalImage", new_image)
 cv2.waitKey(0)
