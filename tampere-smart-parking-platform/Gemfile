@@ -28,6 +28,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'haml'
 gem 'jquery-rails'
 gem 'leaflet-rails'
+gem 'enumerize'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

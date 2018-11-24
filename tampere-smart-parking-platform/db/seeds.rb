@@ -6,7 +6,16 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 file = File.read('/Users/johanneskimmeyer/Coding/tampere-smart-parking/tampere-smart-parking-platform/db/parking_spots.json')
-data_hash = JSON.parse(file)
-data_hash["features"].each do |f|
-  ParkingSpot.create(feature: f)
+data_hash = JSON.parse(file)["features"]
+
+data_hash.each do |feature|
+  feature["geometry"]["coordinates"] = feature["geometry"]["coordinates"].map do |outer|
+    outer.map do |lat,lng|
+      [lng / 100000, lat / 1000000]
+    end
+  end
+end
+
+data_hash.each do |feature|
+  ParkingSpot.create(feature: feature)
 end
