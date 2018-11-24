@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_24_101719) do
+ActiveRecord::Schema.define(version: 2018_11_24_104629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,8 +18,9 @@ ActiveRecord::Schema.define(version: 2018_11_24_101719) do
   create_table "parking_spots", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.json "feature"
     t.string "status"
+    t.text "address"
+    t.json "polygon"
   end
 
 end

@@ -1,4 +1,6 @@
 class ParkingSpotsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def index
     @parking_spot = ParkingSpot.order(:created_at).last
     render json: {latitude: @parking_spot.latitude, longitude: @parking_spot.longitude}
