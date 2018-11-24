@@ -2,24 +2,27 @@ class ParkingSpotsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    @parking_spot = ParkingSpot.order(:created_at).last
-    render json: {latitude: @parking_spot.latitude, longitude: @parking_spot.longitude}
+    @parking_spot = ParkingSpot.
+                    where.
+                    not(last_confirmed_free_at: nil).
+                    order('last_confirmed_free_at DESC').
+                    first
+    render json: {
+      friendly_name: @parking_spot.friendly_name,
+      latitude: @parking_spot.latitude,
+      longitude: @parking_spot.longitude
+    }
   end
 
   def create
-    parking_spot = ParkingSpot.create(parking_spot_params)
-
-    if parking_spot.valid?
-      parking_spot.save!
-      head :ok
-    else
-      head :unprocessable_entity
-    end
+    parking_spot = ParkingSpot.find_by!(friendly_name: friendly_name)
+    parking_spot.touch(:last_confirmed_free_at)
+    head :ok
   end
 
   private
 
-  def parking_spot_params
-    params.require(:parking_spot).permit(:latitude, :longitude)
+  def friendly_name
+    params.require(:parking_spot).require(:friendly_name)
   end
 end
