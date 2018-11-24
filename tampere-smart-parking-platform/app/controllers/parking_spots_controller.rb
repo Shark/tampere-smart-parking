@@ -13,7 +13,12 @@ class ParkingSpotsController < ApplicationController
 
   def toggle_spots
     ParkingSpot.find_each do |parking_spot|
-      parking_spot.update(status: (params[:mode] == 'enable' ? 'free' : 'blocked')) if parking_spot.in_polygon?(JSON.parse(polygon_params))
+      if parking_spot.in_polygon?(JSON.parse(polygon_params))
+        ParkingSpot.transaction do
+          Cache.where(key: 'map_data').delete_all
+          parking_spot.update(status: (params[:mode] == 'enable' ? 'free' : 'blocked'))
+        end
+      end
     end
   end
 
