@@ -21,7 +21,7 @@
 
 function toggleParkingSpots (polygon, mode) {
   $.ajax({
-    url: "/toggle_parking_spots",
+    url: "/parking_spots/toggle_blocked",
     type: "PATCH",
     data: {
       parking_spot: {

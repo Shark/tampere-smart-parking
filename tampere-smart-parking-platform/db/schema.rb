@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_24_194809) do
+ActiveRecord::Schema.define(version: 2018_11_24_222049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2018_11_24_194809) do
     t.json "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "invalidated", default: false, null: false
     t.index ["key"], name: "index_caches_on_key", unique: true
   end
 
@@ -29,10 +30,10 @@ ActiveRecord::Schema.define(version: 2018_11_24_194809) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "address"
-    t.string "status", default: "free"
     t.json "polygon"
     t.string "friendly_name"
     t.datetime "last_confirmed_free_at"
+    t.string "status", default: "free"
     t.boolean "blocked", default: false, null: false
     t.index ["friendly_name"], name: "index_parking_spots_on_friendly_name", unique: true
   end

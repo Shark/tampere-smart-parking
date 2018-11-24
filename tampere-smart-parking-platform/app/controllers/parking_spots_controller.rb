@@ -11,7 +11,7 @@ class ParkingSpotsController < ApplicationController
     }
   end
 
-  def toggle_spots
+  def toggle_blocked
     parsed_params = JSON.parse(polygon_params)
 
     ParkingSpot.where(blocked: (params[:mode] == 'enable')).find_in_batches do |parking_spots|
@@ -20,7 +20,7 @@ class ParkingSpotsController < ApplicationController
                  map(&:id)
 
       ParkingSpot.transaction do
-        Cache.where(key: 'map_data').delete_all
+        Cache.where(key: 'map_data').update_all(invalidated: true)
         ParkingSpot.where(id: spot_ids).update_all(blocked: params[:mode] == 'disable')
       end
     end
@@ -36,7 +36,7 @@ class ParkingSpotsController < ApplicationController
 
       if parking_spot.valid?
         ParkingSpot.transaction do
-          Cache.where(key: 'map_data').delete_all
+          Cache.where(key: 'map_data').update_all(invalidated: true)
           parking_spot.save!
         end
       end
@@ -53,7 +53,7 @@ class ParkingSpotsController < ApplicationController
 
     if parking_spot.valid?
       ParkingSpot.transaction do
-        Cache.where(key: 'map_data').delete_all
+        Cache.where(key: 'map_data').update_all(invalidated: true)
         parking_spot.save!
       end
       head :ok
