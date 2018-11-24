@@ -11,7 +11,7 @@ class ParkingSpotsController < ApplicationController
     }
   end
 
-  def toggle_spots
+  def toggle_blocked
     parsed_params = JSON.parse(polygon_params)
 
     ParkingSpot.where(blocked: (params[:mode] == 'enable')).find_in_batches do |parking_spots|
