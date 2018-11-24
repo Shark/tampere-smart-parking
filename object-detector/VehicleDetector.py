@@ -27,6 +27,7 @@ def box_contains(outer_box, object_coordinates):
 
   return object_box.x1 >= outer_box.x1 and object_box.y1 >= outer_box.y1 and object_box.x2 <= outer_box.x2 and object_box.y2 <= outer_box.y2
 
+# Detect Objects
 execution_path = os.getcwd()
 
 camera = cv2.VideoCapture(1)
