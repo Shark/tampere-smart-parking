@@ -19,3 +19,15 @@
 #map {
   height: 95vh;
 }
+
+.enable-spots {
+  background-color: green;
+  padding: 1px;
+  border-radius: 5px;
+}
+
+.disable-spots {
+  background-color: red;
+  padding: 1px;
+  border-radius: 5px;
+}

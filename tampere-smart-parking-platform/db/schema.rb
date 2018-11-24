@@ -21,10 +21,10 @@ ActiveRecord::Schema.define(version: 2018_11_24_142150) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "address"
+    t.string "status", default: "free"
     t.json "polygon"
     t.string "friendly_name"
     t.datetime "last_confirmed_free_at"
-    t.string "status", default: "free"
     t.index ["friendly_name"], name: "index_parking_spots_on_friendly_name", unique: true
   end
 

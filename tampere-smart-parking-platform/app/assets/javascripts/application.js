@@ -19,31 +19,19 @@
 //= require_tree .
 
 
-function disableParkingSpots (polygon) {
-  $.ajax(url: "",
-    data: "",
-    method: "patch",
+function toggleParkingSpots (polygon, mode) {
+  $.ajax({
+    url: "/toggle_parking_spots",
+    type: "PATCH",
+    data: {
+      parking_spot: {
+        polygon: JSON.stringify(polygon)
+      },
+      mode: mode
+    }
+  })
+};
 
-  )
-}
-
-$.ajax(id, {
-  contentType: 'application/json',
-  dataType: 'json',
-  success:function(result){
-    geojson.remove(e.target);
-    cityData = result.feature_collection;
-    datasetValues = result.city_values;
-    geojson = L.geoJson(cityData, {
-      style: style,
-      onEachFeature: onEachCityFeature
-    }).addTo(mapid);
-    mapid.fitBounds(e.target.getBounds());
-  }
-
-$(document).on('turbolinks:load',  function () {
-
-var parkingSpots = $('.parkingSpots').data('parkingspots');
 var currentDataLayer;
 
 var refreshDataLayer = function(map) {
@@ -51,6 +39,7 @@ var refreshDataLayer = function(map) {
     free: "#567D46",
     occupied: "#Df2800",
     reserved: "#ff7400",
+    blocked: "#cccccc"
   };
 
   var style = function(feature) {
@@ -87,18 +76,17 @@ $(document).on('turbolinks:load',  function () {
     position: 'topright',
     draw: {
       polygon: {
-        allowIntersection: false, // Restricts shapes to simple polygons
+        allowIntersection: false,
         drawError: {
-          color: '#e1e100', // Color the shape will turn when intersects
-          message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+          color: '#e1e100',
+          message: '<strong>Oh snap!<strong> you can\'t draw that!'
         },
         shapeOptions: {
           color: '#97009c'
         }
       },
-      // disable toolbar item by setting it to false
       polyline: false,
-      circle: false, // Turns off this drawing tool
+      circle: false,
       rectangle: false,
       marker: false,
       circlemarker: false
@@ -107,20 +95,36 @@ $(document).on('turbolinks:load',  function () {
   };
 
   // Initialise the draw control and pass it the FeatureGroup of editable layers
-  var drawControl = new L.Control.Draw(drawPluginOptions);
-  map.addControl(drawControl);
+  var drawControlEnable = new L.Control.Draw(drawPluginOptions);
+  map.addControl(drawControlEnable);
+  $(drawControlEnable.getContainer()).addClass("enable-spots");
+
+  var drawControlDisable = new L.Control.Draw(drawPluginOptions);
+  map.addControl(drawControlDisable);
+  $(drawControlDisable.getContainer()).addClass("disable-spots");
+
+  $(window).on('load', function() {
+    $('.disable-spots').find('.leaflet-draw-draw-polygon').click(function() {
+      $('#map').data('mode', 'disable');
+    });
+
+    $('.enable-spots').find('.leaflet-draw-draw-polygon').click(function() {
+      $('#map').data('mode', 'enable');
+    });
+  });
 
   var editableLayers = new L.FeatureGroup();
   map.addLayer(editableLayers);
 
   map.on('draw:created', function(e) {
+    var mode = $('#map').data('mode');
     var type = e.layerType,
     layer = e.layer;
-    polygon = layer._latlngs
-
-    window.test = polygon
-
-    editableLayers.addLayer(layer);
+    polygon = layer._latlngs;
+    polygonAsArray = polygon[0].map( function(value, index) {
+      return new Array(value.lat, value.lng);
+    });
+    toggleParkingSpots(polygonAsArray, mode);
   });
 
 });

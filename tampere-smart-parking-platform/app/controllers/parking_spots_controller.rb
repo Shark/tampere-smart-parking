@@ -14,9 +14,15 @@ class ParkingSpotsController < ApplicationController
     }
   end
 
+  def toggle_spots
+    ParkingSpot.find_each do |parking_spot|
+      parking_spot.update(status: (params[:mode] == 'enable' ? 'free' : 'blocked')) if parking_spot.in_polygon?(JSON.parse(polygon_params))
+    end
+  end
+
   def create
     parking_spot = ParkingSpot.find_by!(friendly_name: friendly_name)
-    parking_spot.assign_attributes(parking_spot_params)
+    parking_spot.assign_attributes(parking_spot_params) unless parking_spot.status == 'blocked'
 
     if parking_spot.status == 'free' && parking_spot.status_was != 'free'
       parking_spot.last_confirmed_free_at = Time.now
@@ -34,6 +40,10 @@ class ParkingSpotsController < ApplicationController
 
   def friendly_name
     params.require(:parking_spot).require(:friendly_name)
+  end
+
+  def polygon_params
+    params.require(:parking_spot).require(:polygon)
   end
 
   def parking_spot_params

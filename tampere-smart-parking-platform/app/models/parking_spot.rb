@@ -27,7 +27,7 @@ class ParkingSpot < ApplicationRecord
 
   def in_polygon?(polygon)
     self.polygon.each do |point|
-      return true if point_in_polygon?(point.reverse, polygon)
+      return true if point_in_polygon?(point, polygon)
     end
     return false
   end
