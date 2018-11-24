@@ -32,10 +32,7 @@ module Admin
         "features": features,
       }
 
-      Cache.transaction do
-        Cache.where(key: 'map_data').delete_all
-        Cache.create!(key: 'map_data', content: feature_collection)
-      end
+      Cache.where(key: 'map_data').update_all(content: feature_collection, invalidated: false)
 
       render json: { map_data: feature_collection }
     end
