@@ -31,4 +31,10 @@ class ParkingSpot < ApplicationRecord
     end
     return false
   end
+
+  scope :recently_confirmed_free, -> {
+    where(status: 'free').
+    where.
+    not(last_confirmed_free_at: nil).
+    order('last_confirmed_free_at DESC') }
 end

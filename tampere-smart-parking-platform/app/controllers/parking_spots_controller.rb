@@ -2,11 +2,8 @@ class ParkingSpotsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    @parking_spot = ParkingSpot.
-                    where.
-                    not(last_confirmed_free_at: nil).
-                    order('last_confirmed_free_at DESC').
-                    first
+    @parking_spot = ParkingSpot.recently_confirmed_free.first
+
     render json: {
       friendly_name: @parking_spot.friendly_name,
       latitude: @parking_spot.latitude,
@@ -29,7 +26,10 @@ class ParkingSpotsController < ApplicationController
     end
 
     if parking_spot.valid?
-      parking_spot.save!
+      ParkingSpot.transaction do
+        Cache.where(key: 'map_data').delete_all
+        parking_spot.save!
+      end
       head :ok
     else
       head :unprocessable_entity

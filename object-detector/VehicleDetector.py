@@ -3,8 +3,11 @@ import os
 import cv2
 import time
 import numpy as np
+import requests
+
 class Box:
-  def __init__(self, x1=0,y1=0, x2=0, y2=0, occupied=False):
+  def __init__(self, friendly_name='Alpha', x1=0,y1=0, x2=0, y2=0, occupied=False):
+    self.friendly_name = friendly_name
     self.x1 = x1
     self.y1 = y1
     self.x2 = x2
@@ -12,14 +15,14 @@ class Box:
     self.occupied = occupied
 
 boxes = [
-  Box(x1=75, y1=150, x2=345, y2=275, occupied=False),
-  Box(x1=350, y1=140, x2=620, y2=260, occupied=False),
-  Box(x1=625, y1=115, x2=905, y2=240, occupied=False),
-  Box(x1=905, y1=100, x2=1175, y2=220, occupied=False),
-  Box(x1=20, y1=660, x2=315, y2=825, occupied=False),
-  Box(x1=335, y1=645, x2=640, y2=810, occupied=False),
-  Box(x1=645, y1=635, x2=965, y2=800, occupied=False),
-  Box(x1=965, y1=625, x2=1265, y2=800, occupied=False)
+  Box(friendly_name='india-x-ray-whiskey', x1=75,  y1=150, x2=345,  y2=275, occupied=False),
+  Box(friendly_name='india-papa-lima',     x1=350, y1=140, x2=620,  y2=260, occupied=False),
+  Box(friendly_name='india-papa-sierra',   x1=625, y1=115, x2=905,  y2=240, occupied=False),
+  Box(friendly_name='kilo-hotel-lima',     x1=905, y1=100, x2=1175, y2=220, occupied=False),
+  Box(friendly_name='charlie-papa-alpha',  x1=20,  y1=660, x2=315,  y2=825, occupied=False),
+  Box(friendly_name='mike-mike-zulu',      x1=335, y1=645, x2=640,  y2=810, occupied=False),
+  Box(friendly_name='quebec-foxtrot-mike', x1=645, y1=635, x2=965,  y2=800, occupied=False),
+  Box(friendly_name='quebec-bravo-lima',   x1=965, y1=625, x2=1265, y2=800, occupied=False)
 ]
 
 def box_contains(outer_box, object_coordinates):
@@ -59,6 +62,11 @@ for box in boxes:
 
   if not box.occupied:
     new_image = cv2.rectangle(new_image, (box.x1, box.y1), (box.x2, box.y2), (0,255,0), 3)
+  
+  requests.post('https://tampere.sh4rk.pw/admin/parking_spots', params = {
+    'friendly_name': box.friendly_name,
+    'status': 'occupied' if box.occupied else 'free'
+  })
 
 cv2.imshow("FinalImage", new_image)
 cv2.waitKey(0)

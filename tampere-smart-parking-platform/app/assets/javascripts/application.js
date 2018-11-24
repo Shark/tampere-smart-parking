@@ -39,19 +39,41 @@ var refreshDataLayer = function(map) {
     free: "#567D46",
     occupied: "#Df2800",
     reserved: "#ff7400",
-    blocked: "#cccccc"
+    blocked: "#cccccc",
+    mostRecentlyConfirmedFree: "#76D6FF",
   };
 
   var style = function(feature) {
-    return {
-      color: colors[feature["properties"]["status"]]
+    if(feature['properties']['isMostRecentlyConfirmedFree']) {
+      return { color: colors['mostRecentlyConfirmedFree'] }
+    } else {
+      return {
+        color: colors[feature["properties"]["status"]]
+      }
     }
   };
+
+  var onEachFeature = function(feature, layer) {
+    // does this feature have a property named popupContent?
+    if (feature.properties && feature.properties) {
+      layer.bindPopup(`
+        <strong>Friendly Name:</strong> ${feature.properties.friendlyName}<br/>
+        <strong>Status:</strong> ${feature.properties.status}<br/>
+        <strong>Last Confirmed Free At:</strong> ${feature.properties.lastConfirmedFreeAt}<br/>
+        <strong>Address:</strong> ${feature.properties.address}
+      `);
+    }
+  }
+
 
   fetch('/admin/map_data')
     .then(data => data.json())
     .then(data => {
-      var newDataLayer = L.geoJSON(data['map_data'], { style: style }).addTo(map);
+      var newDataLayer = L.geoJSON(
+                           data['map_data'], {
+                             style: style,
+                             onEachFeature: onEachFeature
+                           }).addTo(map);
 
       if(currentDataLayer) {
         map.removeLayer(currentDataLayer)

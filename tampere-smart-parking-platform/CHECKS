@@ -1,1 +1,3 @@
+ATTEMPTS=10
+
 /.well-known/health_check
