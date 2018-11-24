@@ -17,7 +17,7 @@ class ParkingSpot < ApplicationRecord
   end
 
   def block
-    return if blocked?
+    return if blocked
     update blocked: true
   end
 

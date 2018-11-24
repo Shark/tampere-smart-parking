@@ -19,7 +19,7 @@ module Admin
           "properties": {
             "friendlyName": spot.friendly_name,
             "status": spot.status,
-            "blocked": spot.blocked?,
+            "blocked": spot.blocked,
             "address": spot.address,
             "lastConfirmedFreeAt": spot.last_confirmed_free_at,
             "isMostRecentlyConfirmedFree": spot.id == last_confirmed_free_id
