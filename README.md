@@ -2,8 +2,6 @@
 
 ## Description and Purpose
 
-## Description and Purpose
-
 When visiting a city, you do not always think about where to park your car before arriving to your location. Very often, you just arrive at the location and then, the “fun” part begins. You have to drive around the blocks trying to find a spot to leave your car - which can be very exhausting and time-consuming.
 
 Wouldn't it be awesome to open an app and get directions to the nearest parking lot free of any charge? But would it really as you are driving your car? Your hands should be at the steering wheel!
