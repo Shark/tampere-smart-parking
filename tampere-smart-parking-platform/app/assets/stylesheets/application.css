@@ -17,7 +17,8 @@
  */
 
 #map {
-  height: 95vh;
+  height: 100vh;
+  position: static !important;
 }
 
 .enable-spots {
