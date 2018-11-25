@@ -34,21 +34,21 @@ function toggleParkingSpots (polygon, mode) {
 
 var currentDataLayer;
 
-var refreshDataLayer = function(map) {
-  var colors = {
-    unblocked: {
-      free: "#567D46",
-      occupied: "#Df2800",
-      reserved: "#ff7400",
-    },
-    blocked: {
-      free: "#cccccc",
-      occupied: "#000000",
-      reserved: "#cccccc",
-    },
-    mostRecentlyConfirmedFree: "#76D6FF",
-  };
+var colors = {
+  unblocked: {
+    free: "#567D46",
+    occupied: "#Df2800",
+    reserved: "#ff7400",
+  },
+  blocked: {
+    free: "#cccccc",
+    occupied: "#000000",
+    reserved: "#cccccc",
+  },
+  mostRecentlyConfirmedFree: "#76D6FF",
+};
 
+var refreshDataLayer = function(map) {
   var style = function(feature) {
     if(feature['properties']['isMostRecentlyConfirmedFree']) {
       return { color: colors['mostRecentlyConfirmedFree'] }
@@ -101,6 +101,33 @@ $(document).on('turbolinks:load',  function () {
 
   var editableLayers = new L.FeatureGroup();
   map.addLayer(editableLayers);
+
+  var legend = L.control({position: 'bottomleft'});
+  legend.onAdd = function (map) {
+
+  var div = L.DomUtil.create('div', 'info legend');
+  labels = ['<strong>Unblocked</strong>'],
+  categories = ['free','reserved','occupied'];
+
+  for (var i = 0; i < categories.length; i++) {
+    div.innerHTML += 
+    labels.push(
+        '<span class="circle" style="color:' + colors['unblocked'][categories[i]] + '"></i> ' +
+    (categories[i] ? categories[i] : '+'));
+
+  }
+  
+  div.innerHTML += 
+  labels.push('<br/><strong style="color: #000000 !important;">Blocked</strong>');
+  for (var i = 0; i < categories.length; i++) {
+    labels.push('<span class="circle" style="color:' + colors['blocked'][categories[i]] + '"></i> ' +
+    (categories[i] ? categories[i] : '+'));
+  }
+
+  div.innerHTML = labels.join('<br>');
+  return div;
+  };
+  legend.addTo(map);
 
   var drawPluginOptions = {
     position: 'topright',
