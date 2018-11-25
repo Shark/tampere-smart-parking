@@ -50,7 +50,12 @@ def detect_cars():
   detector.setModelPath( os.path.join(execution_path , "models/yolo-tiny.h5"))
   detector.loadModel()
   custom = detector.CustomObjects(car=True)
-  return detector.detectCustomObjectsFromImage(custom_objects=custom, input_image=os.path.join(execution_path , 'test.jpg'), output_image_path=os.path.join(execution_path , 'test-detected.jpg'), minimum_percentage_probability=15)
+  return detector.detectCustomObjectsFromImage(
+    custom_objects=custom, input_image=os.path.join(execution_path , 'test.jpg'),
+    output_image_path=os.path.join(execution_path , 'test-detected.jpg'),
+    minimum_percentage_probability=15,
+    display_percentage_probability=False
+  )
 
 def set_occupation(cars, parking_spots):
   for car in cars:
