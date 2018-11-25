@@ -4,6 +4,7 @@ class DialogFlowController < ApplicationController
 
   def webhook
     parking_spot = ParkingSpot.recently_confirmed_free.first
+    parking_spot.update(status: 'reserved')
     escaped_destination = CGI.escape("#{parking_spot.latitude},#{parking_spot.longitude}")
 
     render json: {

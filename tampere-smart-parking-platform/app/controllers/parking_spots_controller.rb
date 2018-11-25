@@ -27,6 +27,8 @@ class ParkingSpotsController < ApplicationController
   end
 
   def bulk_update
+    ParkingSpot.where(status: 'reserved').update_all(status: 'free')
+
     bulk_update_params.each do |spot_name, status|
       parking_spot = ParkingSpot.find_by!(friendly_name: spot_name)
       parking_spot.assign_attributes(status: status)
@@ -36,6 +38,7 @@ class ParkingSpotsController < ApplicationController
 
       if parking_spot.valid?
         ParkingSpot.transaction do
+          ParkingSpot.where(status: 'reserved').update_all(status: 'free')
           Cache.where(key: 'map_data').update_all(invalidated: true)
           parking_spot.save!
         end
@@ -53,6 +56,7 @@ class ParkingSpotsController < ApplicationController
 
     if parking_spot.valid?
       ParkingSpot.transaction do
+        ParkingSpot.where(status: 'reserved').update_all(status: 'free')
         Cache.where(key: 'map_data').update_all(invalidated: true)
         parking_spot.save!
       end
