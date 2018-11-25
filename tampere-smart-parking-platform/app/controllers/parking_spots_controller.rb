@@ -38,7 +38,6 @@ class ParkingSpotsController < ApplicationController
 
       if parking_spot.valid?
         ParkingSpot.transaction do
-          ParkingSpot.where(status: 'reserved').update_all(status: 'free')
           Cache.where(key: 'map_data').update_all(invalidated: true)
           parking_spot.save!
         end
@@ -56,7 +55,6 @@ class ParkingSpotsController < ApplicationController
 
     if parking_spot.valid?
       ParkingSpot.transaction do
-        ParkingSpot.where(status: 'reserved').update_all(status: 'free')
         Cache.where(key: 'map_data').update_all(invalidated: true)
         parking_spot.save!
       end
