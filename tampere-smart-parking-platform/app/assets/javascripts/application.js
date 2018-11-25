@@ -124,6 +124,8 @@ $(document).on('turbolinks:load',  function () {
     (categories[i] ? categories[i] : '+'));
   }
 
+  labels.push('<br/><span class="circle" style="color:' + colors['mostRecentlyConfirmedFree'] + '"><strong>Most Recently Free</strong></i> ')
+
   div.innerHTML = labels.join('<br>');
   return div;
   };
