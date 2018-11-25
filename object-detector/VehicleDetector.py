@@ -105,8 +105,9 @@ except KeyboardInterrupt:
   print('interrupted')
 
 
-# Calibration Mode
+# # Calibration Mode
 # cap = cv2.VideoCapture(1)
+# parking_spots = set_parking_spots()
 
 # while(True):
 #   # Capture frame-by-frame
@@ -115,7 +116,7 @@ except KeyboardInterrupt:
 #   for spot in parking_spots:
 #     cv2.rectangle(frame, (spot.x1, spot.y1), (spot.x2, spot.y2), (0,255,0), 3)
 
-#   cv2.imshow('frame',spots)
+#   cv2.imshow('frame',frame)
 #   if cv2.waitKey(1) & 0xFF == ord('q'):
 #       break
 
